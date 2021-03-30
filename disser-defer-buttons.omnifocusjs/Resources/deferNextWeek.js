@@ -9,9 +9,10 @@
 				task.deferDate = now;
 			}
 
+			// move forward one day
 			task.deferDate = cal.dateByAddingDateComponents(task.deferDate, one_day)
-			// skip the weekend
-			while (task.deferDate.getDay() === 0 || task.deferDate.getDay() === 6) {
+			// move forward to monday
+			while (task.deferDate.getDay() !== 1) {
 				task.deferDate = cal.dateByAddingDateComponents(task.deferDate, one_day)
 			}
 			task.deferDate = cal.startOfDay(task.deferDate)

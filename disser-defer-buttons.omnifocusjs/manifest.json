@@ -11,6 +11,10 @@
     },    {
       "image": "img/deferPlusDay.png",
       "identifier": "deferPlusDay"
+    },
+    {
+      "image": "img/deferNextWeek.png",
+      "identifier": "deferNextWeek"
     }
   ],
   "defaultLocale": "en"
