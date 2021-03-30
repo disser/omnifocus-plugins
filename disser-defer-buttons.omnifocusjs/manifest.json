@@ -1,0 +1,17 @@
+{
+  "author": "Dave Disser",
+  "libraries": [],
+  "identifier": "com.hoborodeo.omnifocus.defer",
+  "version": "1.0",
+  "description": "Defer stuff in Omnifocus",
+  "actions": [
+    {
+      "image": "img/deferPlusHour.png",
+      "identifier": "deferPlusHour"
+    },    {
+      "image": "img/deferPlusDay.png",
+      "identifier": "deferPlusDay"
+    }
+  ],
+  "defaultLocale": "en"
+}
