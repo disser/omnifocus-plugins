@@ -10,24 +10,32 @@
 	"paletteLabel": "Complete and Await Reply",
 }*/
 (() => {
-	let action = new PlugIn.Action(function(selection) {
-		let duplicatedTasks = new Array()
-		selection.tasks.forEach(function(task){
-			insertionLocation = task.containingProject
-			if(insertionLocation === null){insertionLocation = inbox.ending}
-			dupTasks = duplicateTasks([task], insertionLocation)
-			dupTasks[0].name = "Waiting on reply: " + task.name;
-			duplicatedTasks.push(dupTasks[0].id.primaryKey);
-			task.markComplete();
-		});
-		idStr = duplicatedTasks.join(",")
-		URL.fromString("omnifocus:///task/" + idStr).open()
+    let action = new PlugIn.Action(function (selection) {
+        let duplicatedTasks = []
+        waitingTag = flattenedTags.byName("Waiting");
+        selection.tasks.forEach(function (task) {
+            insertionLocation = task.containingProject
+            if (insertionLocation === null) {
+                insertionLocation = inbox.ending
+            }
+            dupTasks = duplicateTasks([task], insertionLocation)
+            dupTasks[0].name = "Waiting on reply: " + task.name;
+            if (waitingTag) {
+                dupTasks[0].addTag(waitingTag);
+            }
+            duplicatedTasks.push(dupTasks[0].id.primaryKey);
+            task.markComplete();
+        });
+
+        idStr = duplicatedTasks.join(",")
+        // jump to the new task
+        //URL.fromString("omnifocus:///task/" + idStr).open()
     });
 
-    
-	action.validate = function(selection){
-		return (selection.tasks.length >= 1)
-	};
-        
-	return action;
+
+    action.validate = function (selection) {
+        return (selection.tasks.length >= 1)
+    };
+
+    return action;
 })();
