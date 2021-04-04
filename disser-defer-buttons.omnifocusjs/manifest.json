@@ -15,6 +15,14 @@
     {
       "image": "img/deferNextWeek.png",
       "identifier": "deferNextWeek"
+    },
+    {
+      "image": "img/deferNextWeekend.png",
+      "identifier": "deferNextWeekend"
+    },
+    {
+      "image": "img/completeAwaitReply.png",
+      "identifier": "completeAwaitReply"
     }
   ],
   "defaultLocale": "en"
