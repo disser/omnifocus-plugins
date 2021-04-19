@@ -1,0 +1,14 @@
+{
+  "author": "Dave Disser",
+  "libraries": [],
+  "identifier": "com.hoborodeo.omnifocus.focusproject",
+  "version": "1.0",
+  "description": "Focus on project of task",
+  "actions": [
+    {
+      "image": "img/newWindowWithProject.png",
+      "identifier": "newWindowWithProject"
+    }
+  ],
+  "defaultLocale": "en"
+}
