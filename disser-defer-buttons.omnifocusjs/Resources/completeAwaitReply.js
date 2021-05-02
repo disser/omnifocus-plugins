@@ -10,6 +10,7 @@
 	"paletteLabel": "Complete and Await Reply",
 }*/
 (() => {
+    const taskNamePrefix = "Waiting on reply: ";
     let action = new PlugIn.Action(function (selection) {
         let duplicatedTasks = []
         waitingTag = flattenedTags.byName("Waiting");
@@ -18,13 +19,19 @@
             if (insertionLocation === null) {
                 insertionLocation = inbox.ending
             }
-            dupTasks = duplicateTasks([task], insertionLocation)
-            dupTasks[0].name = "Waiting on reply: " + task.name;
-            if (waitingTag) {
-                dupTasks[0].addTag(waitingTag);
+            if (task.name.startsWith(taskNamePrefix)) {
+                // This has already been awaited, just make a note
+                let now = new Date();
+                task.note = now.toDateString() + ": awaiting reply.\n" + task.note
+            } else {
+                dupTasks = duplicateTasks([task], insertionLocation)
+                dupTasks[0].name = taskNamePrefix + task.name;
+                if (waitingTag) {
+                    dupTasks[0].addTag(waitingTag);
+                }
+                duplicatedTasks.push(dupTasks[0].id.primaryKey);
+                task.markComplete();
             }
-            duplicatedTasks.push(dupTasks[0].id.primaryKey);
-            task.markComplete();
         });
 
         idStr = duplicatedTasks.join(",")
