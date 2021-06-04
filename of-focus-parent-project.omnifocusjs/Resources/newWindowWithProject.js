@@ -12,12 +12,12 @@
         winPromise.then(win => {
             win.perspective = Perspective.BuiltIn.Projects;
             win.focus = Array.from(projects);
-            win.content.select(task);
+            win.content.select([task]);
         })
     });
 
     action.validate = function (selection) {
-        return (selection.tasks.length === 1)
+        return (selection.tasks.length === 1 || selection.projects.length === 1)
     };
 
     return action;
