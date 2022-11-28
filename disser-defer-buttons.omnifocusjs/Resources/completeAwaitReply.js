@@ -14,27 +14,28 @@
     let action = new PlugIn.Action(function (selection) {
         let duplicatedTasks = []
         waitingTag = flattenedTags.byName("Waiting");
-        selection.tasks.forEach(function (task) {
-            insertionLocation = task.containingProject
+        selection.tasks.forEach(function (parentTask) {
+            // insertionLocation = task.containingProject
+            let insertionLocation = parentTask
             if (insertionLocation === null) {
                 insertionLocation = inbox.ending
             }
-            if (task.name.startsWith(taskNamePrefix)) {
+            if (parentTask.name.startsWith(taskNamePrefix)) {
                 // This has already been awaited, just make a note
                 let now = new Date();
-                task.note = now.toDateString() + ": awaiting reply.\n" + task.note
+                parentTask.note = now.toDateString() + ": awaiting reply.\n" + parentTask.note
             } else {
-                dupTasks = duplicateTasks([task], insertionLocation)
-                dupTasks[0].name = taskNamePrefix + task.name;
+                let dupTasks = duplicateTasks([parentTask], insertionLocation)
+                dupTasks[0].name = "Waiting on reply: " + parentTask.name;
                 if (waitingTag) {
                     dupTasks[0].addTag(waitingTag);
                 }
                 duplicatedTasks.push(dupTasks[0].id.primaryKey);
-                task.markComplete();
+                parentTask.completedByChildren = true;
             }
         });
 
-        idStr = duplicatedTasks.join(",")
+        // idStr = duplicatedTasks.join(",")
         // jump to the new task
         //URL.fromString("omnifocus:///task/" + idStr).open()
     });
